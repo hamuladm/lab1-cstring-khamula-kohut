@@ -20,6 +20,9 @@ public:
     my_str& operator=(const my_str& mystr);
     void swap(my_str& other) noexcept;
     char& operator[](size_t idx);
+    const char& operator[](size_t idx) const;
+    char& at(size_t id_x);
+    const char& at(size_t id_x) const;
     void reserve(size_t new_capacity);
     void shrink_to_fit();
     void resize(size_t new_size, char new_char = ' ');
