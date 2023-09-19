@@ -21,6 +21,16 @@ my_str::my_str(size_t size, char initial): size_m(size) {
 
     // Copying
 my_str::my_str(const my_str& cstr){
-    memcpy(cstr, data_m, size_m + 1);
+    // Done: Kohut + Khamula;
+    size_m = cstr.size_m;
+    capacity_m = size_m - (size_m % 16) + 16;
+    data_m = new char[capacity_m + 1];
+
+    memcpy(data_m, cstr.data_m, size_m + 1);
 }
 
+//[] operator
+char& my_str::operator[](size_t id_x){
+    // Done: Kohut;
+    return data_m[id_x];
+}
