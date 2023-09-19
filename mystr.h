@@ -7,8 +7,8 @@
 
 class my_str{
 private:
-    char* data;
-    size_t capacity;
+    char* data_m;
+    size_t capacity_m;
     size_t size_m;
 
 public:
@@ -32,7 +32,7 @@ public:
     void erase();
     size_t size() const noexcept;
     size_t capacity() const noexcept;
-    const char* c_str() const {return 0};
+    const char* c_str() const {return data_m};
     static constexpr size_t not_found = 1;
     size_t find(char c, size_t idx = 0);
     size_t find(const std::string& str, size_t idx = 0);
