@@ -5,12 +5,14 @@
 
 
 int main() {
-    my_str str {3, 'h'};
+    my_str str {100, 'h'};
     str.at(2) = 'g';
 
     my_str str2 {str};
 
-    std::cout << str.at(2);
+    std::cout << str2.size();
+
+    std::cout << str2.capacity();
 
     return 0;
 }

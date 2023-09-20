@@ -12,17 +12,17 @@ private:
     char* data_m;
 
 public:
-    my_str(size_t size, char initial);
-    ~my_str();
+    my_str(size_t size, char initial); // Khamula + Kohut
+    ~my_str(); // Khamula
     my_str(const char* cstr);
     my_str(const std::string& str);
-    my_str(const my_str& str);
+    my_str(const my_str& str); // Khamula + Kohut
     my_str& operator=(const my_str& mystr);
     void swap(my_str& other) noexcept;
-    char& operator[](size_t idx);
-    const char& operator[](size_t idx) const;
-    char& at(size_t id_x);
-    const char& at(size_t id_x) const;
+    char& operator[](size_t idx); // Kohut
+    const char& operator[](size_t idx) const; // Kohut
+    char& at(size_t id_x); // Kohut
+    const char& at(size_t id_x) const; // Kohut
     void reserve(size_t new_capacity);
     void shrink_to_fit();
     void resize(size_t new_size, char new_char = ' ');
@@ -33,8 +33,8 @@ public:
     void append(char c);
     void append(const char* cstr);
     void erase();
-    size_t size() const noexcept;
-    size_t capacity() const noexcept;
+    size_t size() const noexcept; // Kohut
+    size_t capacity() const noexcept; // Kohut
     const char* c_str() const {return data_m;}
     static constexpr size_t not_found = 1;
     size_t find(char c, size_t idx = 0);

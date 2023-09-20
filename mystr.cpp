@@ -43,6 +43,7 @@ const char& my_str::operator[](size_t idx) const {
 
 // at()
 char& my_str::at(size_t idx) {
+    // Done: Kohut;
     if (idx >= size_m) {
         throw std::out_of_range{
             "Index out of range."
@@ -54,6 +55,7 @@ char& my_str::at(size_t idx) {
 
 // const at()
 const char& my_str::at(size_t idx) const {
+    // Done: Kohut;
     if (idx >= size_m) {
         throw std::out_of_range{
                 "Index out of range."
@@ -62,3 +64,15 @@ const char& my_str::at(size_t idx) const {
         return data_m[idx];
     }
 }
+
+// size()
+size_t my_str::size() const noexcept {
+    // Done: Kohut;
+    return size_m;
+};
+
+// capacity()
+size_t my_str::capacity() const noexcept{
+    // Done: Kohut;
+    return capacity_m;
+};
