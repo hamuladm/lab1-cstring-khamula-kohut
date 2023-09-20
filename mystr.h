@@ -26,6 +26,7 @@ public:
     void shrink_to_fit(); // Done: Khamula
     void resize(size_t new_size, char new_char = ' '); // Done: Khamula
     void clear(); // Done: Khamula
+    void insert(size_t idx , const my_str& str);
     void insert(size_t idx, char c);
     void insert(size_t idx, const char* cstr);
     void append(const my_str& str);

@@ -62,6 +62,7 @@ void my_str::clear(){
 void my_str::resize(size_t new_size, char new_char = ' '){
     if (new_size < size_m){
         size_m = new_size;
+        capacity_m = size_m - (size_m % 16) + 16;
     }
     else if (new_size > size_m && new_size < capacity_m){
         size_m = new_size;
@@ -69,6 +70,8 @@ void my_str::resize(size_t new_size, char new_char = ' '){
         memset(new_data, new_char, new_size + 1);
         delete[] data_m;
         data_m = new_data;
+        size_m = new_size;
+        capacity_m = size_m - (size_m % 16) + 16;
     }
     else if (new_size > capacity_m){
         reserve(new_size);
@@ -76,7 +79,32 @@ void my_str::resize(size_t new_size, char new_char = ' '){
         delete[] data_m;
         memset(new_data, new_char, new_size + 1);
         data_m = new_data;
+        size_m = new_size;
+        capacity_m = size_m - (size_m % 16) + 16;
+    }
+}
 
+void my_str::insert(size_t idx , const my_str& str){
+    if (idx > size_m){
+        throw std::out_of_range{
+                "Index is bigger than size of string"
+        };
+    }
+    else{
+        char* new_data = data_m;
+        char* cpystr = new char[str.size_m + 1];
+        memcpy(cpystr, str.data_m, str.size_m + 1);
+        memcpy(new_data, data_m, idx - 1);
+        for (size_t t = 0; t < idx; ++t){
+            *(new_data + t + idx) = *(cpystr + t);
+        }
+        for (size_t k = idx; k < size_m + 1; ++k){
+            *(new_data + idx) = *(data_m + idx);
+        }
+        delete[] data_m;
 
+        data_m = new_data;
+        size_m = size_m + str.size_m + 1;
+        capacity_m = size_m - (size_m % 16) + 16;
     }
 }
