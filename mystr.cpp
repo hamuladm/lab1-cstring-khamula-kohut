@@ -1,5 +1,5 @@
 #include <iostream>
-#include "string.h"
+#include <cstring>
 #include "mystr.h"
 
 // Destructor
@@ -33,4 +33,50 @@ my_str::my_str(const my_str& cstr){
 char& my_str::operator[](size_t id_x){
     // Done: Kohut;
     return data_m[id_x];
+}
+
+// Minimizing capacity
+void my_str::shrink_to_fit(){
+    size_t new_capacity = size_m ;
+    char* new_data = new char[new_capacity];
+    memcpy(data_m, new_data, new_capacity + 1);
+    capacity_m = new_capacity;
+}
+
+// Making bigger capacity
+void my_str::reserve(size_t new_capacity){
+    if (new_capacity > capacity_m){
+        char* new_data = new char[new_capacity + 1];
+        memcpy(new_data, data_m, size_m + 1);
+        delete[] data_m;
+        data_m = new_data;
+        capacity_m = new_capacity;
+    }
+}
+
+// Clearing string
+void my_str::clear(){
+    size_m = 0;
+}
+// Resizing string
+void my_str::resize(size_t new_size, char new_char = ' '){
+    if (new_size < size_m){
+        size_m = new_size;
+    }
+    else if (new_size > size_m && new_size < capacity_m){
+        size_m = new_size;
+        char* new_data = new char[capacity_m + 1];
+        memset(new_data, new_char, new_size + 1);
+        delete[] data_m;
+        data_m = new_data;
+    }
+    else if (new_size > capacity_m){
+        reserve(new_size);
+        char* new_data = new char[capacity_m];
+        delete[] data_m;
+        memset(new_data, new_char, new_size + 1);
+        data_m = new_data;
+
+
+    }
 }

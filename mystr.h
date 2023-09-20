@@ -20,10 +20,12 @@ public:
     my_str& operator=(const my_str& mystr);
     void swap(my_str& other) noexcept;
     char& operator[](size_t idx);
-    void reserve(size_t new_capacity);
-    void shrink_to_fit();
-    void resize(size_t new_size, char new_char = ' ');
-    void clear();
+    char& at(size_t idx);
+    const char& at(size_t idx) const;
+    void reserve(size_t new_capacity); // Done: Khamula
+    void shrink_to_fit(); // Done: Khamula
+    void resize(size_t new_size, char new_char = ' '); // Done: Khamula
+    void clear(); // Done: Khamula
     void insert(size_t idx, char c);
     void insert(size_t idx, const char* cstr);
     void append(const my_str& str);
