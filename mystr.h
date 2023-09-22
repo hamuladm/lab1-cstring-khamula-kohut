@@ -27,12 +27,12 @@ public:
     void resize(size_t new_size, char new_char = ' '); // Done: Khamula
     void clear(); // Done: Khamula
     void insert(size_t idx , const my_str& str); // Done: Khamula
-    void insert(size_t idx, char c);
+    void insert(size_t idx, char c); // Done: Khamula
     void insert(size_t idx, const char* cstr);
     void append(const my_str& str);
     void append(char c);
     void append(const char* cstr);
-    void erase();
+    void erase(size_t begin, size_t size); // Done: Khamula
     size_t size() const noexcept;
     size_t capacity() const noexcept;
     const char* c_str() const {return data_m;}
