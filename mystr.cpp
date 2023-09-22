@@ -50,11 +50,11 @@ void my_str::reserve(size_t new_capacity){
         memcpy(new_data, data_m, size_m + 1);
         delete[] data_m;
         data_m = new_data;
+        data_m[size_m] = '\0';
         std::cout << capacity_m;
         std::cout << "\n";
         capacity_m = new_capacity;
         std::cout << capacity_m;
-        std::cout << "\n";
     }
 }
 
@@ -77,6 +77,7 @@ void my_str::resize(size_t new_size, char new_char){
         data_m = new_data;
         size_m = new_size;
         capacity_m = size_m - (size_m % 16) + 16;
+        data_m[size_m] = '\0';
     }
     else if (new_size > capacity_m){
         reserve(new_size);
@@ -86,6 +87,7 @@ void my_str::resize(size_t new_size, char new_char){
         data_m = new_data;
         size_m = new_size;
         capacity_m = size_m - (size_m % 16) + 16;
+        data_m[size_m] = '\0';
     }
     std::cout << data_m;
 }
@@ -106,23 +108,53 @@ void my_str::insert(size_t idx , const my_str& str){
 
         delete[] data_m;
         data_m = new_data;
+        data_m[size_m] = '\0';
         std::cout << data_m;
-        std::cout << "\n";
     }
 }
 
-// Inserting C-string
+// Inserting char
 void my_str::insert(size_t idx, char c){
-    size_m = size_m + strlen(&c);
-    capacity_m = size_m - (size_m % 16) + 16;
-    char* new_data = new char[capacity_m + 1];
-    memmove(new_data, data_m, idx);
-    memmove(new_data + idx, &c, 1);
-    memmove(new_data + idx + 1, data_m + idx, size_m - idx + 1);
+    if (idx > size_m){
+        throw std::out_of_range{
+                "Index is bigger than size of string"
+        };
+    }
+    else {
+        size_m = size_m + strlen(&c);
+        capacity_m = size_m - (size_m % 16) + 16;
+        char *new_data = new char[capacity_m + 1];
+        memmove(new_data, data_m, idx);
+        memmove(new_data + idx, &c, 1);
+        memmove(new_data + idx + 1, data_m + idx, size_m - idx + 1);
 
-    delete[] data_m;
-    data_m = new_data;
-    std::cout << data_m;
+        delete[] data_m;
+        data_m = new_data;
+        data_m[size_m] = '\0';
+        std::cout << data_m;
+    }
+}
+
+// Inserting C++ string
+void my_str::insert(size_t idx, const char* cstr){
+    if (idx > size_m){
+        throw std::out_of_range{
+                "Index is bigger than size of string"
+        };
+    }
+    else{
+        size_m = size_m + strlen(cstr);
+        capacity_m = size_m - (size_m % 16) + 16;
+        char* new_data = new char[capacity_m + 1];
+        memmove(new_data, data_m, idx);
+        memmove(new_data + idx, cstr, strlen(cstr) + 1);
+        memmove(new_data + idx + strlen(cstr), data_m + idx, size_m - idx + 1);
+
+        delete[] data_m;
+        data_m = new_data;
+        data_m[size_m] = '\0';
+        std::cout << data_m;
+    }
 }
 
 // Erasing my_str from begin to size
@@ -134,11 +166,12 @@ void my_str::erase(size_t begin, size_t size){
     }
     else if (size > size_m - begin){
         char* new_data = new char[capacity_m + 1];
-        memcpy(new_data, data_m, begin);
+        memmove(new_data, data_m, begin);
         delete[] data_m;
         data_m = new_data;
         size_m = size_m - size;
-        capacity_m = capacity_m = size_m - (size_m % 16) + 16;
+        capacity_m = size_m - (size_m % 16) + 16;
+        data_m[size_m] = '\0';
         std::cout << data_m;
     }
     else{
@@ -148,7 +181,34 @@ void my_str::erase(size_t begin, size_t size){
         delete[] data_m;
         data_m = new_data;
         size_m = size_m - size;
-        capacity_m = capacity_m = size_m - (size_m % 16) + 16;
+        capacity_m = size_m - (size_m % 16) + 16;
+        data_m[size_m] = '\0';
         std::cout << data_m;
     }
+}
+
+// Appending my_str string
+void my_str::append(const my_str& str){
+    memmove(data_m + size_m, str.data_m, str.size_m);
+    size_m = size_m + str.size_m;
+    capacity_m = capacity_m = size_m - (size_m % 16) + 16;
+    data_m[size_m] = '\0';
+    std::cout << data_m;
+}
+// Appending char
+void my_str::append(char c){
+    memmove(data_m + size_m, &c, 1);
+    size_m = size_m + 1;
+    capacity_m = capacity_m = size_m - (size_m % 16) + 16;
+    data_m[size_m] = '\0';
+    std::cout << data_m;
+}
+
+// Appending Cstring
+void my_str::append(const char* cstr){
+    memmove(data_m + size_m, cstr, strlen(cstr));
+    size_m = size_m + strlen(cstr);
+    capacity_m = capacity_m = size_m - (size_m % 16) + 16;
+    data_m[size_m] = '\0';
+    std::cout << data_m;
 }
