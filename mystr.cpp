@@ -10,7 +10,7 @@ my_str::~my_str() {
 
 // Constructor
 my_str::my_str(size_t size, char initial): size_m(size) {
-    // Done: Kohut + Khamula;
+    // Done: Kohut;
     capacity_m = size - (size % 16) + 16;
 
     data_m = new char[capacity_m + 1];
@@ -21,7 +21,7 @@ my_str::my_str(size_t size, char initial): size_m(size) {
 
 // Copying from my_str object
 my_str::my_str(const my_str& cstr): size_m(cstr.size_m) {
-    // Done: Kohut + Khamula;
+    // Done: Khamula;
     capacity_m = cstr.capacity_m;
     data_m = new char[capacity_m + 1];
 
@@ -51,6 +51,10 @@ my_str::my_str(const std::string& str): size_m(str.length()) {
 // Copy assigment
 my_str& my_str::operator=(const my_str& mystr) {
     // Done: Kohut;
+    if (mystr.data_m == data_m) {
+        return *this;
+    }
+
     delete[] data_m;
 
     size_m = mystr.size_m;
@@ -110,13 +114,13 @@ const char& my_str::at(size_t idx) const {
 size_t my_str::size() const noexcept {
     // Done: Kohut;
     return size_m;
-};
+}
 
 // Getter for capacity_m
 size_t my_str::capacity() const noexcept{
     // Done: Kohut;
     return capacity_m;
-};
+}
 
 // Finding char
 size_t my_str::find(char c, size_t idx) {
@@ -508,9 +512,7 @@ bool operator<(const my_str& str1, const my_str& str2) {
         }
     }
 
-    if (str1_length == str2_length) {
-        return false;
-    } else if (str1_length > str2_length) {
+    if ((str1_length == str2_length) || (str1_length > str2_length)) {
         return false;
     } else {
         return true;
@@ -571,9 +573,7 @@ bool operator<(const my_str& str1, const char* str2) {
         }
     }
 
-    if (str1_length == str2_length) {
-        return false;
-    } else if (str1_length > str2_length) {
+    if ((str1_length == str2_length) || (str1_length > str2_length)) {
         return false;
     } else {
         return true;
@@ -581,17 +581,17 @@ bool operator<(const my_str& str1, const char* str2) {
 }
 
 bool operator>(const my_str& str1, const char* str2) {
-    // Done: Kohut;
+    // Done: Khamula;
     return (!(str1 < str2) && (str1 != str2));
 }
 
 bool operator<=(const my_str& str1, const char* str2) {
-    // Done: Kohut;
+    // Done: Khamula;
     return !(str1>str2);
 }
 
 bool operator>=(const my_str& str1, const char* str2) {
-    // Done: Kohut;
+    // Done: Khamula;
     return !(str1<str2);
 }
 
@@ -599,4 +599,4 @@ std::ostream& operator<<(std::ostream& stream, const my_str& str){
     // Done: Kohut;
     stream << str.c_str();
     return stream;
-};
+}
