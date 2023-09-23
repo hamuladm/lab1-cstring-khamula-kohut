@@ -35,7 +35,7 @@ public:
     void erase();
     size_t size() const noexcept; // Kohut
     size_t capacity() const noexcept; // Kohut
-    const char* c_str() const {return data_m;} // Khamula + Kohut
+    const char* c_str() const; // Khamula + Kohut
     static constexpr size_t not_found = -1; // used
     size_t find(char c, size_t idx = 0); // Kohut
     size_t find(const std::string& str, size_t idx = 0); // Kohut
@@ -43,24 +43,21 @@ public:
     my_str substr(size_t begin, size_t size); // Kohut
 };
 
-//std::ostream& operator<<(std::ostream& stream, const my_str& str){
-//    stream << str.c_str();
-//    return stream;
-//};
+std::ostream& operator<<(std::ostream& stream, const my_str& str); // Kohut + Khamula
 
-bool operator==(const my_str& str1, const my_str& str2);
-bool operator!=(const my_str& str1, const my_str& str2);
-bool operator<(const my_str& str1, const my_str& str2);
-bool operator>(const my_str& str1, const my_str& str2);
-bool operator>=(const my_str& str1, const my_str& str2);
-bool operator<=(const my_str& str1, const my_str& str2);
+bool operator==(const my_str& str1, const my_str& str2); // Kohut
+bool operator!=(const my_str& str1, const my_str& str2); // Kohut
+bool operator<(const my_str& str1, const my_str& str2); // Kohut
+bool operator>(const my_str& str1, const my_str& str2); // Kohut
+bool operator>=(const my_str& str1, const my_str& str2); // Kohut
+bool operator<=(const my_str& str1, const my_str& str2); // Kohut
 
-bool operator==(const my_str& str1, const char* str2);
-bool operator!=(const my_str& str1, const char* str2);
-bool operator<(const my_str& str1, const char* str2);
-bool operator>(const my_str& str1, const char* str2);
-bool operator<=(const my_str& str1, const char* str2);
-bool operator>=(const my_str& str1, const char* str2);
+bool operator==(const my_str& str1, const char* str2); // Kohut
+bool operator!=(const my_str& str1, const char* str2); // Kohut
+bool operator<(const my_str& str1, const char* str2); // Kohut
+bool operator>(const my_str& str1, const char* str2); // Khamula
+bool operator<=(const my_str& str1, const char* str2); // Khamula
+bool operator>=(const my_str& str1, const char* str2); // Khamula
 
 bool operator==(const char* str1, const my_str& str2);
 bool operator!=(const char* str1, const my_str& str2);
