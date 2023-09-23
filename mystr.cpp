@@ -253,3 +253,12 @@ bool operator>=(const char* str1, const my_str& str2){
 bool operator<=(const char* str1, const my_str& str2){
     return ((str1 < str2) || (str1 == str2));
 }
+
+const char* my_str::c_str() const {
+    return data_m;
+}
+
+std::ostream& operator<<(std::ostream& stream, const my_str& str){
+    stream << str.c_str();
+    return stream;
+};

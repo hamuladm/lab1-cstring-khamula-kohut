@@ -35,7 +35,7 @@ public:
     void erase(size_t begin, size_t size); // Done: Khamula
     size_t size() const noexcept;
     size_t capacity() const noexcept;
-    const char* c_str() const {return data_m;}
+    const char* c_str() const;
     static constexpr size_t not_found = 1;
     size_t find(char c, size_t idx = 0);
     size_t find(const std::string& str, size_t idx = 0);
@@ -43,10 +43,7 @@ public:
     my_str substr(size_t begin, size_t size);
 };
 
-//std::ostream& operator<<(std::ostream& stream, const my_str& str){
-//    stream << str.c_str();
-//    return stream;
-//};
+std::ostream& operator<<(std::ostream& stream, const my_str& str);
 
 std::istream readline(std::istream& stream, my_str& str);
 
