@@ -6,9 +6,4 @@
 
 
 int main() {
-    my_str str1 {100, 'b'};
-    str1[1] = '\n';
-    str1[5] = 'j';
-    std::cout << str1;
-    return 0;
 }
