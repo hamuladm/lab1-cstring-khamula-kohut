@@ -11,7 +11,6 @@ private:
     size_t size_m;
     char* data_m;
 public:
-
     my_str(size_t size, char initial); // Khamula + Kohut
     ~my_str(); // Khamula
     my_str(const char* cstr); // Kohut
@@ -23,16 +22,17 @@ public:
     const char& operator[](size_t idx) const; // Kohut
     char& at(size_t id_x); // Kohut
     const char& at(size_t id_x) const; // Kohut
-    void reserve(size_t new_capacity);
-    void shrink_to_fit();
-    void resize(size_t new_size, char new_char = ' ');
-    void clear();
-    void insert(size_t idx, char c);
-    void insert(size_t idx, const char* cstr);
-    void append(const my_str& str);
-    void append(char c);
-    void append(const char* cstr);
-    void erase();
+    void reserve(size_t new_capacity); // Done: Khamula
+    void shrink_to_fit(); // Done: Khamula
+    void resize(size_t new_size, char new_char = ' '); // Done: Khamula
+    void clear(); // Done: Khamula
+    void insert(size_t idx , const my_str& str); // Done: Khamula
+    void insert(size_t idx, char c); // Done: Khamula
+    void insert(size_t idx, const char* cstr); // Done: Khamula
+    void append(const my_str& str); // Done: Khamula
+    void append(char c); // Done: Khamula
+    void append(const char* cstr); // Done: Khamula
+    void erase(size_t begin, size_t size); // Done: Khamula
     size_t size() const noexcept; // Kohut
     size_t capacity() const noexcept; // Kohut
     const char* c_str() const; // Khamula + Kohut
@@ -59,12 +59,12 @@ bool operator>(const my_str& str1, const char* str2); // Khamula
 bool operator<=(const my_str& str1, const char* str2); // Khamula
 bool operator>=(const my_str& str1, const char* str2); // Khamula
 
-bool operator==(const char* str1, const my_str& str2);
-bool operator!=(const char* str1, const my_str& str2);
-bool operator<(const char* str1, const my_str& str2);
-bool operator>(const char* str1, const my_str& str2);
-bool operator>=(const char* str1, const my_str& str2);
-bool operator<=(const char* str1, const my_str& str2);
+bool operator==(const char* str1, const my_str& str2); // Khamula
+bool operator!=(const char* str1, const my_str& str2); // Khamula
+bool operator<(const char* str1, const my_str& str2); // Khamula
+bool operator>(const char* str1, const my_str& str2); // Khamula
+bool operator>=(const char* str1, const my_str& str2); // Khamula
+bool operator<=(const char* str1, const my_str& str2); // Khamula
 
 
 #endif //LAB1_CSTRING_KHAMULA_KOHUT_MYSTR_H
