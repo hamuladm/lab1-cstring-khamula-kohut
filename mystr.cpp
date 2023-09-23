@@ -602,7 +602,7 @@ std::ostream& operator<<(std::ostream& stream, const my_str_t& str){
 }
 
 std::istream& operator>>(std::istream& stream, my_str_t& str) {
-    std::cout << "huy";
+    // Done: Kohut;
     char temp_c[512];
     stream >> temp_c;
 
@@ -613,6 +613,7 @@ std::istream& operator>>(std::istream& stream, my_str_t& str) {
 }
 
 std::istream& readline(std::istream& stream, my_str_t& str) {
+    // Done: Kohut;
     char temp_c[512];
     stream.getline(temp_c, sizeof(temp_c));
 
