@@ -6,7 +6,5 @@
 
 
 int main() {
-    my_str a {6, 'h'};
-    a = a;
-    std::cout << a;
+    return 0;
 }
