@@ -48,6 +48,8 @@ public:
 //    return stream;
 //};
 
+std::istream readline(std::istream& stream, my_str& str);
+
 bool operator==(const my_str& str1, const my_str& str2);
 bool operator!=(const my_str& str1, const my_str& str2);
 bool operator<(const my_str& str1, const my_str& str2);

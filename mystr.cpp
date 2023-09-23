@@ -212,3 +212,44 @@ void my_str::append(const char* cstr){
     data_m[size_m] = '\0';
     std::cout << data_m;
 }
+
+bool operator==(const char* str1, const my_str& str2){
+    if (strlen(str1) != str2.size()){
+        return false;
+    }
+        size_t len = strlen(str1) > str2.size() ? strlen(str1): str2.size();
+        for (size_t t = 0; t < len; ++t) {
+            if (str1[t] != str2.at(t)) {
+                return false;
+            }
+        }
+        return true;
+}
+
+bool operator!=(const char* str1, const my_str& str2){
+    return !(str1 == str2);
+}
+
+bool operator<(const char* str1, const my_str& str2){
+    size_t len = strlen(str1) > str2.size() ? strlen(str1): str2.size();
+    for(size_t t = 0; t < len; ++t){
+        if (str1[t] < str2.at(t)){
+            return false;
+        }
+    }
+    if (strlen(str1) < str2.size()){
+        return true;
+    }
+}
+
+bool operator>(const char* str1, const my_str& str2){
+    return ((str1 != str2) && !(str1 < str2));
+}
+
+bool operator>=(const char* str1, const my_str& str2){
+    return ((str1 > str2) || (str1 == str2));
+}
+
+bool operator<=(const char* str1, const my_str& str2){
+    return ((str1 < str2) || (str1 == str2));
+}
