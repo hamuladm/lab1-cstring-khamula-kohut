@@ -6,6 +6,5 @@
 
 
 int main() {
-    std::cout << 'huy';
     return 0;
 }

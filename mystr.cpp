@@ -19,7 +19,7 @@ my_str::my_str(size_t size, char initial): size_m(size) {
     data_m[size_m] = '\0';
     }
 
-    // Copying
+// Copying from my_str object
 my_str::my_str(const my_str& cstr): size_m(cstr.size_m) {
     // Done: Kohut + Khamula;
     capacity_m = cstr.capacity_m;
@@ -28,6 +28,7 @@ my_str::my_str(const my_str& cstr): size_m(cstr.size_m) {
     memcpy(data_m, cstr.data_m, size_m + 1);
 }
 
+// Copying from Cstring
 my_str::my_str(const char* cstr): size_m(strlen(cstr)) {
     // Done: Kohut;
     capacity_m = size_m - (size_m % 16) + 16;
@@ -36,6 +37,7 @@ my_str::my_str(const char* cstr): size_m(strlen(cstr)) {
     memcpy(data_m, cstr, size_m + 1);
 }
 
+// Copying from built-in string
 my_str::my_str(const std::string& str): size_m(str.length()) {
     // Done: Kohut;
     capacity_m = size_m - (size_m % 16) + 16;
@@ -59,7 +61,7 @@ my_str& my_str::operator=(const my_str& mystr) {
     return *this;
 }
 
-//swap()
+// swap()
 void my_str::swap(my_str& other) noexcept {
     // Done: Kohut;
     std::swap(data_m, other.data_m);
@@ -74,7 +76,7 @@ char& my_str::operator[](size_t idx){
     return data_m[idx];
 }
 
-//const [] operator
+// const [] operator
 const char& my_str::operator[](size_t idx) const {
     // Done: Kohut;
     return data_m[idx];
@@ -104,19 +106,19 @@ const char& my_str::at(size_t idx) const {
     }
 }
 
-// size()
+// Getter for size_m
 size_t my_str::size() const noexcept {
     // Done: Kohut;
     return size_m;
 };
 
-// capacity()
+// Getter for capacity_m
 size_t my_str::capacity() const noexcept{
     // Done: Kohut;
     return capacity_m;
 };
 
-// find() char
+// Finding char
 size_t my_str::find(char c, size_t idx) {
     // Done: Kohut;
     if (idx > size_m) {
@@ -133,13 +135,13 @@ size_t my_str::find(char c, size_t idx) {
     }
 }
 
-// c_str()
+// Getter for data_m
 const char* my_str::c_str() const {
     // Done: Kohut;
     return data_m;
 }
 
-//find c-string
+// Finding Cstring
 size_t my_str::find(const char* cstr, size_t idx) {
     // Done: Kohut;
     if (idx > size_m) {
@@ -169,7 +171,7 @@ size_t my_str::find(const char* cstr, size_t idx) {
     }
 }
 
-//find string
+// Finding built-in string
 size_t my_str::find(const std::string& str, size_t idx) {
     // Done: Kohut;
     if (idx > size_m) {
@@ -184,7 +186,6 @@ size_t my_str::find(const std::string& str, size_t idx) {
         }
         for (size_t i = idx; i < size_m - str_length + 1; ++i) {
             for (size_t j = 0; j < str_length; ++j) {
-                //std::cout << str.at(j) << ' ' << data_m[i+j] << '\n';
                 if (str.at(j) == data_m[i + j]) {
                     counter++;
                 } else {
@@ -384,18 +385,26 @@ void my_str::erase(size_t begin, size_t size){
 // Appending my_str string
 void my_str::append(const my_str& str){
     // Done: Khamula;
-    memmove(data_m + size_m, str.data_m, str.size_m);
+    char* new_data = new char[capacity_m + str.size_m + 1];
     size_m = size_m + str.size_m;
+    memmove(new_data, data_m, str.size_m);
+    memmove(new_data + size_m, str.data_m, str.size_m);
     capacity_m = capacity_m = size_m - (size_m % 16) + 16;
+    delete[] data_m;
+    data_m = new_data;
     data_m[size_m] = '\0';
     std::cout << data_m;
 }
 // Appending char
 void my_str::append(char c){
     // Done: Khamula;
-    memmove(data_m + size_m, &c, 1);
+    char* new_data = new char[capacity_m + 2];
     size_m = size_m + 1;
+    memmove(new_data, data_m, 1);
+    memmove(new_data + size_m, &c, 2);
     capacity_m = capacity_m = size_m - (size_m % 16) + 16;
+    delete[] data_m;
+    data_m = new_data;
     data_m[size_m] = '\0';
     std::cout << data_m;
 }
@@ -403,9 +412,13 @@ void my_str::append(char c){
 // Appending Cstring
 void my_str::append(const char* cstr){
     // Done: Khamula;
-    memmove(data_m + size_m, cstr, strlen(cstr));
+    char* new_data = new char[capacity_m + strlen(cstr) + 1];
     size_m = size_m + strlen(cstr);
+    memmove(new_data, data_m, strlen(cstr));
+    memmove(new_data + size_m, &cstr, strlen(cstr) + 1);
     capacity_m = capacity_m = size_m - (size_m % 16) + 16;
+    delete[] data_m;
+    data_m = new_data;
     data_m[size_m] = '\0';
     std::cout << data_m;
 }
@@ -431,9 +444,9 @@ bool operator!=(const char* str1, const my_str& str2){
 
 bool operator<(const char* str1, const my_str& str2){
     // Done: Khamula;
-    size_t len = strlen(str1) > str2.size() ? strlen(str1): str2.size();
+    size_t len = strlen(str1) < str2.size() ? strlen(str1): str2.size();
     for(size_t t = 0; t < len; ++t){
-        if (str1[t] < str2.at(t)){
+        if (str1[t] > str2.at(t)){
             return false;
         }
     }
