@@ -1,3 +1,7 @@
+// This is a personal academic project. Dear PVS-Studio, please check it.
+// PVS-Studio Static Code Analyzer for C, C++, C#, and Java: https://pvs-studio.com
+
+
 /**
  *
  * @date 23.09.23
@@ -236,6 +240,8 @@ void my_str_t::shrink_to_fit(){
     char* new_data = new char[new_capacity];
     memcpy(data_m, new_data, new_capacity + 1);
     capacity_m = new_capacity;
+    delete[] data_m;
+    data_m = new_data;
     data_m[size_m] = '\0';
 }
 
@@ -387,12 +393,12 @@ void my_str_t::append(const my_str_t& str){
     // Done: Khamula;
     size_t old_size = size_m;
     size_m = size_m + str.size_m;
-    capacity_m = capacity_m = size_m - (size_m % 16) + 16;
+    capacity_m = size_m - (size_m % 16) + 16;
     char* new_data = new char[capacity_m + 1];
     memmove(new_data, data_m, old_size);
     memmove(new_data + old_size, str.data_m, str.size_m);
     size_m = size_m + str.size_m;
-    capacity_m = capacity_m = size_m - (size_m % 16) + 16;
+    capacity_m = size_m - (size_m % 16) + 16;
     delete[] data_m;
     data_m = new_data;
     data_m[size_m] = '\0';
@@ -401,14 +407,11 @@ void my_str_t::append(const my_str_t& str){
 // Appending char
 void my_str_t::append(char c){
     // Done: Khamula;
-    size_t old_size = size_m;
     size_m = size_m + 1;
-    capacity_m = capacity_m = size_m - (size_m % 16) + 16;
+    capacity_m = size_m - (size_m % 16) + 16;
     char* new_data = new char[capacity_m + 1];
-    memmove(new_data, data_m, old_size);
-    memmove(new_data + old_size, &c, 2);
-    size_m = size_m + 1;
-    capacity_m = capacity_m = size_m - (size_m % 16) + 16;
+    memcpy(new_data, data_m, size_m - 1);
+    new_data[size_m - 1] = c;
     delete[] data_m;
     data_m = new_data;
     data_m[size_m] = '\0';
@@ -419,7 +422,7 @@ void my_str_t::append(const char* cstr){
     // Done: Khamula;
     size_t old_size = size_m;
     size_m = size_m + strlen(cstr);
-    capacity_m = capacity_m = size_m - (size_m % 16) + 16;
+    capacity_m = size_m - (size_m % 16) + 16;
     char* new_data = new char[capacity_m + 1];
     memmove(new_data, data_m, old_size);
     memmove(new_data + old_size, cstr, strlen(cstr) + 1);
@@ -447,17 +450,18 @@ bool operator!=(const char* str1, const my_str_t& str2){
     return !(str1 == str2);
 }
 
-bool operator<(const char* str1, const my_str_t& str2){
+bool operator<(const char* str1, const my_str_t& str2) {
     // Done: Khamula;
-    size_t len = strlen(str1) < str2.size() ? strlen(str1): str2.size();
-    for(size_t t = 0; t < len; ++t){
-        if (str1[t] > str2.at(t)){
+    size_t len = strlen(str1) < str2.size() ? strlen(str1) : str2.size();
+    for (size_t t = 0; t < len; ++t) {
+        if (str1[t] > str2.at(t)) {
             return false;
         }
     }
-    if (strlen(str1) < str2.size()){
+    if (strlen(str1) < str2.size()) {
         return true;
     }
+    return false;
 }
 
 bool operator>(const char* str1, const my_str_t& str2){
