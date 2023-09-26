@@ -1,3 +1,10 @@
+/**
+ *
+ * @date 23.09.23
+ * @authors Kohut Zahar, Dmytro Khamula
+ *
+**/
+
 #include <iostream>
 #include <cstring>
 #include "mystr.h"
@@ -74,7 +81,7 @@ void my_str_t::swap(my_str_t& other) noexcept {
 }
 
 
-//[] operator
+// [] operator
 char& my_str_t::operator[](size_t idx){
     // Done: Kohut;
     return data_m[idx];
@@ -205,6 +212,7 @@ size_t my_str_t::find(const std::string& str, size_t idx) {
     }
 }
 
+// Returns my_str_t substring from begin to size + begin
 my_str_t my_str_t::substr(size_t begin, size_t size) {
     // Done: Kohut;
     if (begin > size_m) {
@@ -215,13 +223,8 @@ my_str_t my_str_t::substr(size_t begin, size_t size) {
         char* temp;
         temp = new char[size];
         memcpy(temp, data_m + begin, size);
-
         my_str_t new_my_str_t = temp;
-
         delete[] temp;
-
-        std::cout << new_my_str_t.data_m;
-
         return new_my_str_t;
     }
 }
@@ -233,6 +236,7 @@ void my_str_t::shrink_to_fit(){
     char* new_data = new char[new_capacity];
     memcpy(data_m, new_data, new_capacity + 1);
     capacity_m = new_capacity;
+    data_m[size_m] = '\0';
 }
 
 // Making bigger capacity
@@ -244,10 +248,7 @@ void my_str_t::reserve(size_t new_capacity){
         delete[] data_m;
         data_m = new_data;
         data_m[size_m] = '\0';
-        std::cout << capacity_m;
-        std::cout << "\n";
         capacity_m = new_capacity;
-        std::cout << capacity_m;
     }
 }
 
@@ -284,8 +285,8 @@ void my_str_t::resize(size_t new_size, char new_char){
         capacity_m = size_m - (size_m % 16) + 16;
         data_m[size_m] = '\0';
     }
-    std::cout << data_m;
 }
+
 // Inserting my_str_t string
 void my_str_t::insert(size_t idx , const my_str_t& str){
     // Done: Khamula;
@@ -305,7 +306,6 @@ void my_str_t::insert(size_t idx , const my_str_t& str){
         delete[] data_m;
         data_m = new_data;
         data_m[size_m] = '\0';
-        std::cout << data_m;
     }
 }
 
@@ -318,7 +318,7 @@ void my_str_t::insert(size_t idx, char c){
         };
     }
     else {
-        size_m = size_m + strlen(&c);
+        size_m = size_m + 1;
         capacity_m = size_m - (size_m % 16) + 16;
         char *new_data = new char[capacity_m + 1];
         memmove(new_data, data_m, idx);
@@ -328,7 +328,6 @@ void my_str_t::insert(size_t idx, char c){
         delete[] data_m;
         data_m = new_data;
         data_m[size_m] = '\0';
-        std::cout << data_m;
     }
 }
 
@@ -351,7 +350,6 @@ void my_str_t::insert(size_t idx, const char* cstr){
         delete[] data_m;
         data_m = new_data;
         data_m[size_m] = '\0';
-        std::cout << data_m;
     }
 }
 
@@ -371,7 +369,6 @@ void my_str_t::erase(size_t begin, size_t size){
         size_m = size_m - size;
         capacity_m = size_m - (size_m % 16) + 16;
         data_m[size_m] = '\0';
-        std::cout << data_m;
     }
     else{
         char* new_data = new char[capacity_m + 1];
@@ -382,49 +379,53 @@ void my_str_t::erase(size_t begin, size_t size){
         size_m = size_m - size;
         capacity_m = size_m - (size_m % 16) + 16;
         data_m[size_m] = '\0';
-        std::cout << data_m;
     }
 }
 
 // Appending my_str_t string
 void my_str_t::append(const my_str_t& str){
     // Done: Khamula;
-    char* new_data = new char[capacity_m + str.size_m + 1];
+    size_t old_size = size_m;
     size_m = size_m + str.size_m;
-    memmove(new_data, data_m, str.size_m);
-    memmove(new_data + size_m, str.data_m, str.size_m);
+    capacity_m = capacity_m = size_m - (size_m % 16) + 16;
+    char* new_data = new char[capacity_m + 1];
+    memmove(new_data, data_m, old_size);
+    memmove(new_data + old_size, str.data_m, str.size_m);
+    size_m = size_m + str.size_m;
     capacity_m = capacity_m = size_m - (size_m % 16) + 16;
     delete[] data_m;
     data_m = new_data;
     data_m[size_m] = '\0';
-    std::cout << data_m;
 }
+
 // Appending char
 void my_str_t::append(char c){
     // Done: Khamula;
-    char* new_data = new char[capacity_m + 2];
+    size_t old_size = size_m;
     size_m = size_m + 1;
-    memmove(new_data, data_m, 1);
-    memmove(new_data + size_m, &c, 2);
+    capacity_m = capacity_m = size_m - (size_m % 16) + 16;
+    char* new_data = new char[capacity_m + 1];
+    memmove(new_data, data_m, old_size);
+    memmove(new_data + old_size, &c, 2);
+    size_m = size_m + 1;
     capacity_m = capacity_m = size_m - (size_m % 16) + 16;
     delete[] data_m;
     data_m = new_data;
     data_m[size_m] = '\0';
-    std::cout << data_m;
 }
 
 // Appending Cstring
 void my_str_t::append(const char* cstr){
     // Done: Khamula;
-    char* new_data = new char[capacity_m + strlen(cstr) + 1];
+    size_t old_size = size_m;
     size_m = size_m + strlen(cstr);
-    memmove(new_data, data_m, strlen(cstr));
-    memmove(new_data + size_m, &cstr, strlen(cstr) + 1);
     capacity_m = capacity_m = size_m - (size_m % 16) + 16;
+    char* new_data = new char[capacity_m + 1];
+    memmove(new_data, data_m, old_size);
+    memmove(new_data + old_size, cstr, strlen(cstr) + 1);
     delete[] data_m;
     data_m = new_data;
     data_m[size_m] = '\0';
-    std::cout << data_m;
 }
 
 bool operator==(const char* str1, const my_str_t& str2){
@@ -602,10 +603,8 @@ std::ostream& operator<<(std::ostream& stream, const my_str_t& str){
 }
 
 std::istream& operator>>(std::istream& stream, my_str_t& str) {
-    std::cout << "huy";
     char temp_c[512];
     stream >> temp_c;
-
     my_str_t temp = temp_c;
     str.swap(temp);
 
@@ -615,7 +614,6 @@ std::istream& operator>>(std::istream& stream, my_str_t& str) {
 std::istream& readline(std::istream& stream, my_str_t& str) {
     char temp_c[512];
     stream.getline(temp_c, sizeof(temp_c));
-
     my_str_t temp = temp_c;
     str.swap(temp);
 
