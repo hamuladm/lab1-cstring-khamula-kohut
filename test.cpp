@@ -15,12 +15,13 @@
 int main() {
     /**
      *
-     * Part for @author Khamula's methods and operators
+     * Part for @author Khamula methods and operators
      *
      */
 
     // Init strings
     std::cout << "Testing methods..." << std::endl;
+
     my_str_t initstr{"I love Python!"};
     my_str_t initstr2 = my_str_t(5, 'P');
     const char* tcstr = "Python, C++, Java";
@@ -28,15 +29,18 @@ int main() {
 
     // Copying testing
     std::cout << "Test copying from my_str_t function" << std::endl;
+
     my_str_t cpystr1{initstr};
     std::cout << cpystr1.c_str() << std::endl;
     my_str_t cpystr2 = initstr;
     std::cout << cpystr2.c_str() << std::endl;
     std::cout << "Done!" << std::endl;
+    std::cout << "-----------------------" << std::endl;
     std::cout << std::endl;
 
     // Reserve testing
     std::cout << "Test reserve() function" << std::endl;
+
     initstr.reserve(1);
     std::cout << initstr.capacity() << " should be the same as before: 16" << std::endl;
     initstr2.reserve(1);
@@ -45,31 +49,42 @@ int main() {
     std::cout << initstr.capacity() << " should be equal 30" << std::endl;
     initstr2.reserve(30);
     std::cout << initstr2.capacity() << " should be equal 30" << std::endl;
+
     std::cout << "Done!" << std::endl;
+    std::cout << "-----------------------" << std::endl;
     std::cout << std::endl;
 
     // Shrink_to_fit testing
     std::cout << "Test shrink_to_fit() function" << std::endl;
+
     initstr.shrink_to_fit();
     std::cout << initstr.capacity() << " should be equal 14" << std::endl;
     initstr2.shrink_to_fit();
     std::cout << initstr2.capacity() << " should be equal 5" << std::endl;
+
     std::cout << "Done!" << std::endl;
+    std::cout << "-----------------------" << std::endl;
     std::cout << std::endl;
 
     // Resizing testing
     std::cout << "Test shrink_to_fit() function" << std::endl;
-    my_str_t newinit{"I hate C++"};
-    my_str_t newinit2 = my_str_t(15, 'H');
+
+    my_str_t resinit{"I hate C++"};
+    my_str_t resinit2 = my_str_t(15, 'H');
+
     std::cout << "Old strings:" << std::endl;
-    std::cout << newinit.c_str() << std::endl;
-    std::cout << newinit2.c_str() << std::endl;
-    newinit.resize(24, 'l');
-    newinit2.resize(24, 'o');
+    std::cout << resinit.c_str() << std::endl;
+    std::cout << resinit2.c_str() << std::endl;
+
+    resinit.resize(24, 'l');
+    resinit2.resize(24, 'o');
+
     std::cout << "New strings:" << std::endl;
-    std::cout << newinit.c_str() << std::endl;
-    std::cout << newinit2.c_str() << std::endl;
+    std::cout << resinit.c_str() << std::endl;
+    std::cout << resinit2.c_str() << std::endl;
+
     std::cout << "Done!" << std::endl;
+    std::cout << "-----------------------" << std::endl;
     std::cout << std::endl;
 
     // Inserting of my_str_t testing
@@ -111,10 +126,12 @@ int main() {
     std::cout << obj2.c_str() << std::endl;
 
     std::cout << "Done (3/3)" << std::endl;
+    std::cout << "-----------------------" << std::endl;
     std::cout << std::endl;
 
     // Appending testing
     std::cout << "Testing append()" << std::endl;
+
     my_str_t obj5{"I need to append "};
     my_str_t obj7{"my_str_t"};
     my_str_t obj8{"I need to append "};
@@ -129,10 +146,52 @@ int main() {
     std::cout << obj9.c_str() << std::endl;
 
     std::cout << "Done!" << std::endl;
+    std::cout << "-----------------------" << std::endl;
     std::cout << std::endl;
 
-    // Tests
-    // Done: Kohut;
+    // Testing erase
+    std::cout << "Testing erase() func" << std::endl;
+
+    my_str_t obj10{"I stop smoking cigars"};
+    my_str_t obj11 = my_str_t(24, 'Q');
+
+    std::cout << "Old strings:" << std::endl;
+    std::cout << obj10.c_str() << std::endl;
+    std::cout << obj11.c_str() << std::endl;
+    std::cout << std::endl;
+
+
+    std::cout << "Erased strings:" << std::endl;
+    obj10.erase(6, 8);
+    obj11.erase(7, 69);
+    std::cout << obj10.c_str() << std::endl;
+    std::cout << obj11.c_str() << std::endl;
+    std::cout << "Done!" << std::endl;
+
+    //Testing clear() function
+    std::cout << "Testing clear() func" << std::endl;
+    std::cout << std::endl;
+
+    std::cout << "Size before:" << std::endl;
+    std::cout << obj10.size() << std::endl;
+    std::cout << obj11.size() << std::endl;
+
+    obj10.clear();
+    obj11.clear();
+
+    std::cout << "Size after:" << std::endl;
+    std::cout << obj10.size() << std::endl;
+    std::cout << obj11.size() << std::endl;
+    std::cout << "Done!" << std::endl;
+
+    std::cout << std::endl;
+    std::cout << "All test passed!" << std::endl;
+
+    /**
+     *
+     * Part for @author Kohut methods and operators
+     *
+     */
     std::cout << "Test 1: Constructor (and << ostream-operator);" << '\n';
     my_str_t str1 (100000, 'y');
     std::cout << str1 << "\n\n";
@@ -244,7 +303,6 @@ int main() {
 
     std::cout << "Test 7: capacity() function;" << '\n';
     my_str_t str17 {16, 'c'};
-    std::string testcppstring10 = "abcdefghi";
     my_str_t str18 {testcppstring9};
 
     std::cout << "String: " << str17 << "\nSize: " << str17.size() << "\nCapacity: " << str17.capacity() << "\n\n";
