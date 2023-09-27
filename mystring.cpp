@@ -24,7 +24,7 @@ my_str_t::my_str_t(size_t size, char initial): size_m(size) {
     // Done: Kohut;
     capacity_m = size - (size % 16) + 16;
 
-    data_m = new char[capacity_m + 1];
+    data_m = new char[capacity_m];
     memset(data_m, initial, size_m);
 
     data_m[size_m] = '\0';
@@ -34,7 +34,7 @@ my_str_t::my_str_t(size_t size, char initial): size_m(size) {
 my_str_t::my_str_t(const my_str_t& cstr): size_m(cstr.size_m) {
     // Done: Khamula;
     capacity_m = cstr.capacity_m;
-    data_m = new char[capacity_m + 1];
+    data_m = new char[capacity_m];
 
     memcpy(data_m, cstr.data_m, size_m + 1);
 }
@@ -43,7 +43,7 @@ my_str_t::my_str_t(const my_str_t& cstr): size_m(cstr.size_m) {
 my_str_t::my_str_t(const char* cstr): size_m(strlen(cstr)) {
     // Done: Kohut;
     capacity_m = size_m - (size_m % 16) + 16;
-    data_m = new char[capacity_m + 1];
+    data_m = new char[capacity_m];
 
     memcpy(data_m, cstr, size_m + 1);
 }
@@ -52,7 +52,7 @@ my_str_t::my_str_t(const char* cstr): size_m(strlen(cstr)) {
 my_str_t::my_str_t(const std::string& str): size_m(str.length()) {
     // Done: Kohut;
     capacity_m = size_m - (size_m % 16) + 16;
-    data_m = new char[capacity_m + 1];
+    data_m = new char[capacity_m];
     memcpy(data_m, str.c_str(), size_m);
 
     data_m[size_m] = '\0';
@@ -70,7 +70,7 @@ my_str_t& my_str_t::operator=(const my_str_t& mystr) {
 
     size_m = mystr.size_m;
     capacity_m = mystr.capacity_m;
-    data_m = new char[capacity_m + 1];
+    data_m = new char[capacity_m];
     memcpy(data_m, mystr.data_m, size_m + 1);
 
     return *this;
@@ -273,7 +273,7 @@ void my_str_t::resize(size_t new_size, char new_char){
     }
     else if (new_size > size_m && new_size < capacity_m){
         size_m = new_size;
-        char* new_data = new char[capacity_m + 1];
+        char* new_data = new char[capacity_m];
         memset(new_data, new_char, new_size + 1);
         delete[] data_m;
         data_m = new_data;
@@ -304,7 +304,7 @@ void my_str_t::insert(size_t idx , const my_str_t& str){
     else{
         size_m = size_m + str.size_m;
         capacity_m = size_m - (size_m % 16) + 16;
-        char* new_data = new char[capacity_m + 1];
+        char* new_data = new char[capacity_m];
         memmove(new_data, data_m, idx);
         memmove(new_data + idx, str.data_m, str.size_m);
         memmove(new_data + idx + str.size_m, data_m + idx, size_m - idx + 1);
@@ -326,7 +326,7 @@ void my_str_t::insert(size_t idx, char c){
     else {
         size_m = size_m + 1;
         capacity_m = size_m - (size_m % 16) + 16;
-        char *new_data = new char[capacity_m + 1];
+        char *new_data = new char[capacity_m];
         memmove(new_data, data_m, idx);
         memmove(new_data + idx, &c, 1);
         memmove(new_data + idx + 1, data_m + idx, size_m - idx + 1);
@@ -348,7 +348,7 @@ void my_str_t::insert(size_t idx, const char* cstr){
     else{
         size_m = size_m + strlen(cstr);
         capacity_m = size_m - (size_m % 16) + 16;
-        char* new_data = new char[capacity_m + 1];
+        char* new_data = new char[capacity_m];
         memmove(new_data, data_m, idx);
         memmove(new_data + idx, cstr, strlen(cstr) + 1);
         memmove(new_data + idx + strlen(cstr), data_m + idx, size_m - idx + 1);
@@ -368,7 +368,7 @@ void my_str_t::erase(size_t begin, size_t size){
         };
     }
     else if (size > size_m - begin){
-        char* new_data = new char[capacity_m + 1];
+        char* new_data = new char[capacity_m];
         memmove(new_data, data_m, begin);
         delete[] data_m;
         data_m = new_data;
@@ -377,7 +377,7 @@ void my_str_t::erase(size_t begin, size_t size){
         data_m[size_m] = '\0';
     }
     else{
-        char* new_data = new char[capacity_m + 1];
+        char* new_data = new char[capacity_m];
         memmove(new_data, data_m, begin);
         memmove(new_data + begin, data_m + begin + size, size);
         delete[] data_m;
@@ -394,7 +394,7 @@ void my_str_t::append(const my_str_t& str){
     size_t old_size = size_m;
     size_m = size_m + str.size_m;
     capacity_m = size_m - (size_m % 16) + 16;
-    char* new_data = new char[capacity_m + 1];
+    char* new_data = new char[capacity_m];
     memmove(new_data, data_m, old_size);
     memmove(new_data + old_size, str.data_m, str.size_m);
     size_m = size_m + str.size_m;
@@ -409,7 +409,7 @@ void my_str_t::append(char c){
     // Done: Khamula;
     size_m = size_m + 1;
     capacity_m = size_m - (size_m % 16) + 16;
-    char* new_data = new char[capacity_m + 1];
+    char* new_data = new char[capacity_m];
     memcpy(new_data, data_m, size_m - 1);
     new_data[size_m - 1] = c;
     delete[] data_m;
@@ -423,7 +423,7 @@ void my_str_t::append(const char* cstr){
     size_t old_size = size_m;
     size_m = size_m + strlen(cstr);
     capacity_m = size_m - (size_m % 16) + 16;
-    char* new_data = new char[capacity_m + 1];
+    char* new_data = new char[capacity_m];
     memmove(new_data, data_m, old_size);
     memmove(new_data + old_size, cstr, strlen(cstr) + 1);
     delete[] data_m;
