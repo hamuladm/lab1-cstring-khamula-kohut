@@ -193,7 +193,7 @@ int main() {
      *
      */
     std::cout << "Test 1: Constructor (and << ostream-operator);" << '\n';
-    my_str_t str1 (100000, 'y');
+    my_str_t str1 (42, 'y');
     std::cout << str1 << "\n\n";
 
     std::cout << "Test 2: C-String Constructor;" << '\n';
@@ -293,7 +293,7 @@ int main() {
     std::cout << str14 << ">=" << testcppstring7 << "   -   " << (str14>=testcppstring7) << '\n';
     std::cout << str14 << "<=" << testcppstring7 << "   -   " << (str14<=testcppstring7) << "\n\n";
 
-    std::cout << "Test 6: size() function;" << '\n';
+    std::cout << "Test 6: size() method;" << '\n';
     my_str_t str15 {4, 'g'};
     std::string testcppstring9 = "abcdefghi";
     my_str_t str16 {testcppstring9};
@@ -301,9 +301,10 @@ int main() {
     std::cout << "String: " << str15 << "\nSize: " << str15.size() << "\n\n";
     std::cout << "String: " << str16 << "\nSize: " << str16.size() << "\n\n";
 
-    std::cout << "Test 7: capacity() function;" << '\n';
+    std::cout << "Test 7: capacity() method;" << '\n';
     my_str_t str17 {16, 'c'};
-    my_str_t str18 {testcppstring9};
+    std::string testcppstring10 = "123456789";
+    my_str_t str18 {testcppstring10};
 
     std::cout << "String: " << str17 << "\nSize: " << str17.size() << "\nCapacity: " << str17.capacity() << "\n\n";
     std::cout << "String: " << str18 << "\nSize: " << str18.size() << "\nCapacity: " << str18.capacity() << "\n\n";
@@ -329,7 +330,7 @@ int main() {
 
     std::cout << "Something like <str20[3] = 'b';> would not compile, because str20 is a const object." << "\n\n";
 
-    std::cout << "Test 8.1: non-const at();" << '\n';
+    std::cout << "Test 9.1: non-const at();" << '\n';
     my_str_t str21 {5, 'a'};
     int ind5 = 3;
     int ind6 = 10;
@@ -341,19 +342,111 @@ int main() {
         std::cout << "str21.at(10) throws <" << e.what() << ">, because at() throw out_of_range." << '\n';
     }
 
-    str11[ind5] = 'b';
-    std::cout << "After change in string on index " << ind5 << ", character on index " << ind5 << " in string " << str21 << " is " << str21[ind5] << "\n\n";
+    str21.at(ind5) = 'b';
+    std::cout << "After change in string on index " << ind5 << ", character on index " << ind5 << " in string " << str21 << " is " << str21.at(ind5) << "\n\n";
 
-    std::cout << "Test 8.2: const []-operator;" << '\n';
+    std::cout << "Test 9.2: const at();" << '\n';
     const my_str_t str22 {5, 'a'};
     int ind7 = 3;
     int ind8 = 10;
 
     std::cout << "Character on index " << ind7 << " in string " << str22 << " is " << str22[ind7] << '\n';
     try {
-        std::cout << str21.at(ind8);
+        std::cout << str22.at(ind8);
     } catch (std::out_of_range& e) {
         std::cout << "str22.at(10) throws <" << e.what() << ">, because at() throw out_of_range." << '\n';
     }
     std::cout << "Something like <str22.at(3) = 'b';> would not compile, because str22 is a const object." << "\n\n";
+
+    std::cout << "Test 10: c_str() method;" << '\n';
+    std::string testcppstring11 = "C_str() test string.";
+    my_str_t str23 {testcppstring11};
+
+    std::cout << "Output of str23.c_str(): " << testcppstring11.c_str() << "\n\n";
+
+    std::cout << "Test 11: swap() method;" << '\n';
+    my_str_t str24 {5, 't'};
+    my_str_t str25 {10, 'r'};
+
+    std::cout << "Before swap: " << '\n';
+    std::cout << "str24 address: " << (void*) str24.c_str() << "\nstr24 data: " << str24 << '\n';
+    std::cout << "str25 address: " << (void*) str25.c_str() << "\nstr25 data: " << str25 << "\n\n";
+
+    str24.swap(str25);
+    std::cout << "After swap: " << '\n';
+    std::cout << "str24 address: " << (void*) str24.c_str() << "\nstr24 data: " << str24 << '\n';
+    std::cout << "str25 address: " << (void*) str25.c_str() << "\nstr25 data: " << str25 << "\n\n";
+
+    std::cout << "Test 12: substring() method;" << '\n';
+    std::string testcppstring12 = "substr() test string.";
+    my_str_t str26 {testcppstring12};
+    int ind9 = 4;
+    int size1 = 8;
+    std::cout << "Substring with size " << size1 << ", beginning from index " << ind9 << " of string <" << testcppstring12 << "> is:" << '\n' << str26.substr(ind9, size1) << "\n\n";
+
+    int size2 = 1000;
+    std::cout << "Substring with size " << size2 << ", beginning from index " << ind9 << " of string <" << testcppstring12 << "> is:" << '\n' << str26.substr(ind9, size2) << "\n\n";
+
+    int ind10 = 1000;
+    try {
+        std::cout << str26.substr(ind10, 5);
+    } catch (std::out_of_range& e) {
+        std::cout << "str26.substr(1000, 5) throws <" << e.what() << ">, because <begin> must be less than size of string." << "\n\n";
+    }
+
+    std::cout << "Test 13.1: find() method for char;" << '\n';
+    std::string testcppstring13 = "abcdefghi";
+    my_str_t str27 {testcppstring13};
+    char ch1 = 'd';
+    char ch2 = '+';
+
+    int ind11 = 2;
+    std::cout << "Finding " << ch1 << " from index " << ind11 << " in string " << str27 << "   -   " << str27.find(ch1, ind11) << '\n';
+
+    int ind12 = 5;
+    std::cout << "Finding " << ch1 << " from index " << ind12 << " in string " << str27 << "   -   " << str27.find(ch1, ind12) << '\n';
+
+    int ind13 = 0;
+    std::cout << "Finding " << ch2 << " from index " << ind3 << " in string " << str27 << "   -   " << str27.find(ch2, ind13) << "\n\n";
+
+    std::cout << "Test 13.2: find() method for C-string;" << '\n';
+    const char* testcstr6 = "efgh";
+    const char* testcstr7 = "ershs";
+    const char* testcstr8 = "weaiufheipugheiughieugh";
+
+    int ind14 = 1;
+    std::cout << "Finding " << testcstr6 << " from index " << ind14 << " in string " << str27 << "   -   " << str27.find(testcstr6, ind14) << '\n';
+
+    int ind15 = 5;
+    std::cout << "Finding " << testcstr6 << " from index " << ind15 << " in string " << str27 << "   -   " << str27.find(testcstr6, ind15) << '\n';
+
+    int ind16 = 0;
+    std::cout << "Finding " << testcstr7 << " from index " << ind16 << " in string " << str27 << "   -   " << str27.find(testcstr7, ind16) << '\n';
+
+    int ind17 = 4;
+    std::cout << "Finding " << testcstr8 << " from index " << ind17 << " in string " << str27 << "   -   " << str27.find(testcstr8, ind17) << "\n\n";
+
+    std::cout << "Test 13.3: find() method for C++ string;" << '\n';
+    const char* testcstr9 = "def";
+    const char* testcstr10 = "dfgs";
+    const char* testcstr11 = "hello_hello_hello";
+
+    int ind18 = 3;
+    std::cout << "Finding " << testcstr9 << " from index " << ind18 << " in string " << str27 << "   -   " << str27.find(testcstr9, ind18) << '\n';
+
+    int ind19 = 4;
+    std::cout << "Finding " << testcstr9 << " from index " << ind19 << " in string " << str27 << "   -   " << str27.find(testcstr9, ind19) << '\n';
+
+    int ind20 = 0;
+    std::cout << "Finding " << testcstr10 << " from index " << ind20 << " in string " << str27 << "   -   " << str27.find(testcstr10, ind20) << '\n';
+
+    int ind21 = 6;
+    std::cout << "Finding " << testcstr11 << " from index " << ind21 << " in string " << str27 << "   -   " << str27.find(testcstr11, ind21) << "\n\n";
+
+    int ind22 = 1000;
+    try {
+        std::cout << str27.find('g', ind22);
+    } catch (std::out_of_range& e) {
+        std::cout << "str27.find('g', 1000) throws <" << e.what() << ">, because <idx> must be less than size of string." << '\n';
+    }
 }
