@@ -10,7 +10,7 @@
  *
 **/
 
-#include "mystr.h"
+#include "mystring.hpp"
 
 int main() {
     /**
