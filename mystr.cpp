@@ -607,11 +607,14 @@ std::ostream& operator<<(std::ostream& stream, const my_str_t& str){
 }
 
 std::istream& operator>>(std::istream& stream, my_str_t& str) {
-    char temp_c[512];
-    stream >> temp_c;
-    my_str_t temp = temp_c;
-    str.swap(temp);
-
+    // Done: Kohut;
+    str.clear();
+    stream >> std::ws;
+    char chr;
+    while (stream.get(chr) && not std::isspace(chr)) {
+        str.append(chr);
+    }
+    str.shrink_to_fit();
     return stream;
 }
 
