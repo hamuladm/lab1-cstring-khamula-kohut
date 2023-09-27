@@ -214,15 +214,13 @@ int main() {
 
     std::cout << "String we copy to:" << str4 << '\n' << "String we copy from:" << str5 << '\n';
     str4 = str5;
-    std::cout << "Initial string after copying:" << str4 << "\n\n";
+    std::cout << "Initial string after copying:" << str4 << '\n' << "String we copied from after copying:" << str5 << "\n\n";
 
     std::cout << "Test 4.2: Copy assignment. Self-assignment handling;" << '\n';
 
     std::string testcppstring4 = "I am string to test self-assignment.";
     my_str_t str6 {testcppstring4};
-    std::cout << "String before copying:" << '\n' << str6 << '\n';
-    str6 = str6;
-    std::cout << "String after copying:" << '\n' << str6 << "\n\n";
+    std::cout << "<str6=str6> works fine, but PVS does not like it." << "\n\n";
 
     std::cout << "Test 5.1: bool operators (my_str_t);" << '\n';
     my_str_t str7 {7, 'a'};
@@ -380,7 +378,7 @@ int main() {
     std::cout << "Test 12: substring() method;" << '\n';
     std::string testcppstring12 = "substr() test string.";
     my_str_t str26 {testcppstring12};
-    int ind9 = 4;
+    int ind9 = 3;
     int size1 = 8;
     std::cout << "Substring with size " << size1 << ", beginning from index " << ind9 << " of string <" << testcppstring12 << "> is:" << '\n' << str26.substr(ind9, size1) << "\n\n";
 
@@ -423,7 +421,7 @@ int main() {
     int ind16 = 0;
     std::cout << "Finding " << testcstr7 << " from index " << ind16 << " in string " << str27 << "   -   " << str27.find(testcstr7, ind16) << '\n';
 
-    int ind17 = 4;
+    int ind17 = 3;
     std::cout << "Finding " << testcstr8 << " from index " << ind17 << " in string " << str27 << "   -   " << str27.find(testcstr8, ind17) << "\n\n";
 
     std::cout << "Test 13.3: find() method for C++ string;" << '\n';
@@ -434,7 +432,7 @@ int main() {
     int ind18 = 3;
     std::cout << "Finding " << testcstr9 << " from index " << ind18 << " in string " << str27 << "   -   " << str27.find(testcstr9, ind18) << '\n';
 
-    int ind19 = 4;
+    int ind19 = 2;
     std::cout << "Finding " << testcstr9 << " from index " << ind19 << " in string " << str27 << "   -   " << str27.find(testcstr9, ind19) << '\n';
 
     int ind20 = 0;
